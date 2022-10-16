@@ -1,15 +1,65 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
+import 'antd/dist/antd.css';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import Root from './containers/Root';
+import AuthRoot from './containers/AuthRoot';
+import AuthLoad from './pages/AuthLoad';
+import AppsRoot from './containers/AppsRoot';
+import AppsHome from './pages/AppsHome';
+import ErrorPage from './pages/ErrorPage';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+    errorElement: <ErrorPage />, 
+    children: [
+      {
+        path: 'auth',
+        element: <AuthRoot />,
+        children: [
+          {
+            path: 'load',
+            element: <AuthLoad />
+          },
+          {
+            path: '',
+            element: <Navigate to='load'/>
+          }
+        ]
+      },
+      {
+        path: 'apps',
+        element: <AppsRoot />,
+        children: [
+          {
+            path: '',
+            element: <AppsHome />
+          }
+        ]
+      },
+      {
+        path: '',
+        element: <Navigate to='auth'/>
+      }
+    ]
+  }
+])
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
+      {/* <App />
+    </RouterProvider> */}
   </React.StrictMode>
 );
 
