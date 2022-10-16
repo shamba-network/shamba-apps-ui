@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -13,6 +13,7 @@ import AuthLoad from './pages/AuthLoad';
 import AppsRoot from './containers/AppsRoot';
 import AppsHome from './pages/AppsHome';
 import ErrorPage from './pages/ErrorPage';
+import { Auth0Provider } from '@auth0/auth0-react';
 
 const router = createBrowserRouter([
   {
@@ -52,14 +53,21 @@ const router = createBrowserRouter([
   }
 ])
 
+
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-      {/* <App />
-    </RouterProvider> */}
+    <Auth0Provider
+      domain={process.env.REACT_APP_AUTH_DOMAIN!}
+      clientId={process.env.REACT_APP_AUTH_CLIENT_ID!}
+      redirectUri={`${window.location.origin}/apps`}
+    >
+      <RouterProvider router={router} />
+    </Auth0Provider>
+      {/* <App />*/}
   </React.StrictMode>
 );
 
