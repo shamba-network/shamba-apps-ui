@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { SmileOutlined } from '@ant-design/icons'
 import { Button } from 'antd';
 
-const ErrorPage = () => {
+export const ErrorPage = () => {
   const navigate = useNavigate()
 
   return (
@@ -17,5 +17,3 @@ const ErrorPage = () => {
     </div>
   );
 }
-
-export default ErrorPage
