@@ -9,7 +9,7 @@ import { IApp, IAppPayload } from "../models"
 
 const client = getClient()
 
-const AppsHome = () => {
+export const AppsHome: React.FC = () => {
     const { getAccessTokenSilently } = useAuth0()
     const [Message, MessageContext] = message.useMessage()
     const [apps, setApps] = useState<Array<IApp>>([])
@@ -22,7 +22,7 @@ const AppsHome = () => {
     useEffect(() => {
         const fn = async () => await loadApps()
         fn();
-    })
+    }, [])
 
     const loadApps = async () => {
         const token = await getAccessTokenSilently({ audience: process.env.REACT_APP_API_AUDIENCE })
@@ -140,5 +140,3 @@ const AppsHome = () => {
         </div>
     )
 }
-
-export default AppsHome
