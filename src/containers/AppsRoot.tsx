@@ -4,7 +4,7 @@ import { NavBar } from "../components";
 
 const { Header, Content, Footer } = Layout;
 
-const AppsRoot = () => {
+export const AppsRoot:React.FC = () => {
 
   const year = new Date().getFullYear()
 
@@ -25,5 +25,3 @@ const AppsRoot = () => {
     </Layout>
   )
 }
-
-export default AppsRoot

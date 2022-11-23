@@ -1,11 +1,9 @@
 import { Outlet } from "react-router-dom"
 
-const AuthRoot = () => {
+export const AuthRoot: React.FC = () => {
     return (
         <div className="root-container">
             <Outlet />
         </div>
     )
 }
-
-export default AuthRoot

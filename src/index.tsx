@@ -7,13 +7,9 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
-import Root from './containers/Root';
-import AuthRoot from './containers/AuthRoot';
-import AuthLoad from './pages/AuthLoad';
-import AppsRoot from './containers/AppsRoot';
-import AppsHome from './pages/AppsHome';
-import ErrorPage from './pages/ErrorPage';
 import { Auth0Provider } from '@auth0/auth0-react';
+import {Root, AppsRoot, AuthRoot} from './containers';
+import {AppsHome, AuthLoad, ErrorPage} from './pages';
 
 const router = createBrowserRouter([
   {
