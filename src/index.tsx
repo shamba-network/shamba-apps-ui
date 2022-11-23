@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 import 'antd/dist/antd.min.css';
 import './index.css';
-import App from './App';
+// import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
@@ -64,6 +64,7 @@ root.render(
       domain={process.env.REACT_APP_AUTH_DOMAIN!}
       clientId={process.env.REACT_APP_AUTH_CLIENT_ID!}
       redirectUri={`${window.location.origin}/apps`}
+      audience={process.env.REACT_APP_API_AUDIENCE}
     >
       <RouterProvider router={router} />
     </Auth0Provider>

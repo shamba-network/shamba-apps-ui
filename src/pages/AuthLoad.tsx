@@ -5,16 +5,20 @@ import { Spin } from "antd"
 
 const AuthLoad = () => {
     const navigate = useNavigate()
-    const {isAuthenticated, loginWithRedirect} = useAuth0()
+    const { isAuthenticated, loginWithRedirect } = useAuth0()
 
     useEffect(() => {
-        const fn = async () => isAuthenticated ? navigate("/apps") : await loginWithRedirect()
+        const fn = async () => await checkAuth()
         fn()
-    }, [])
+    })
+
+    const checkAuth = async () => {
+        isAuthenticated ? navigate("/apps") : await loginWithRedirect()
+    }
 
     return (
         <div className="auth-load">
-            <Spin size="large"/>
+            <Spin size="large" />
         </div>
     )
 }

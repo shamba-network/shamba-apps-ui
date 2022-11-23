@@ -1,13 +1,29 @@
 import { Outlet } from "react-router-dom"
-import NavBar from "../components/NavBar"
+import { Layout } from "antd"
+import { NavBar } from "../components";
 
-const AppsRoot =() => {
-    return (
-        <div className="root-container">
-            <NavBar />
-            <Outlet />
-        </div>
-    )
+const { Header, Content, Footer } = Layout;
+
+const AppsRoot = () => {
+
+  const year = new Date().getFullYear()
+
+  return (
+    <Layout>
+
+      <Header className="header">
+        <NavBar />
+      </Header>
+
+      <Content className="content">
+        <Outlet />
+      </Content>
+
+      <Footer style={{ textAlign: 'center' }}>
+        {`Shamba ${year}`}
+      </Footer>
+    </Layout>
+  )
 }
 
 export default AppsRoot
