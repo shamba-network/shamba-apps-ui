@@ -1,0 +1,2 @@
+# Redirect rule for use with SPAs that handle routing internally.
+/*    /index.html   200
