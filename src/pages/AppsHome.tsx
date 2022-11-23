@@ -22,6 +22,8 @@ export const AppsHome: React.FC = () => {
     useEffect(() => {
         const fn = async () => await loadApps()
         fn();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const loadApps = async () => {
