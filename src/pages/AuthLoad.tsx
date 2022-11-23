@@ -8,13 +8,11 @@ export const AuthLoad = () => {
     const { isAuthenticated, loginWithRedirect } = useAuth0()
 
     useEffect(() => {
-        const fn = async () => await checkAuth()
+        const fn = async () => isAuthenticated ? navigate("/apps") : await loginWithRedirect()
         fn()
-    }, [isAuthenticated])
 
-    const checkAuth = async () => {
-        isAuthenticated ? navigate("/apps") : await loginWithRedirect()
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAuthenticated])
 
     return (
         <div className="auth-load">
