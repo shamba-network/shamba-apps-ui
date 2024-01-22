@@ -28,6 +28,7 @@ export const AppsHome: React.FC = () => {
 
         fn();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoading, isAuthenticated])
 
     const loadApps = async () => {
@@ -121,7 +122,7 @@ export const AppsHome: React.FC = () => {
                 audience: process.env.REACT_APP_API_AUDIENCE
             }
         })
-        
+
         await client.deleteApp(token, id)
         const newApps = apps.filter(app => app.id !== id)
         setApps(newApps)
