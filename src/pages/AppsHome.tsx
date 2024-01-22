@@ -10,7 +10,7 @@ import { IApp, IAppPayload } from "../models"
 const client = getClient()
 
 export const AppsHome: React.FC = () => {
-    const { getAccessTokenSilently } = useAuth0()
+    const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0()
     const [Message, MessageContext] = message.useMessage()
     const [apps, setApps] = useState<Array<IApp>>([])
     const [currentObject, setCurrentObject] = useState<IApp>({} as IApp)
@@ -20,14 +20,24 @@ export const AppsHome: React.FC = () => {
     const [isFetching, setIsFetching] = useState<boolean>(true)
 
     useEffect(() => {
-        const fn = async () => await loadApps()
+        const fn = async () => {
+            if (!isLoading && isAuthenticated) {
+                await loadApps()
+            }
+        }
+
         fn();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [isLoading, isAuthenticated])
 
     const loadApps = async () => {
-        const token = await getAccessTokenSilently({ audience: process.env.REACT_APP_API_AUDIENCE })
+        const token = await getAccessTokenSilently({
+            authorizationParams: {
+                audience: process.env.REACT_APP_API_AUDIENCE
+            }
+        })
+
         const fetched = await client.getApps(token)
         setApps(fetched)
         setIsFetching(false)
@@ -59,7 +69,13 @@ export const AppsHome: React.FC = () => {
 
     const handleCreate = async (data: IAppPayload) => {
         setLoading(true)
-        const token = await getAccessTokenSilently({ audience: process.env.REACT_APP_API_AUDIENCE })
+
+        const token = await getAccessTokenSilently({
+            authorizationParams: {
+                audience: process.env.REACT_APP_API_AUDIENCE
+            }
+        })
+
         const created = await client.createApp(token, data)
         const newApps = [created, ...apps]
         setApps(newApps)
@@ -74,7 +90,13 @@ export const AppsHome: React.FC = () => {
 
     const handleEdit = async (data: IAppPayload) => {
         setLoading(true)
-        const token = await getAccessTokenSilently({ audience: process.env.REACT_APP_API_AUDIENCE })
+
+        const token = await getAccessTokenSilently({
+            authorizationParams: {
+                audience: process.env.REACT_APP_API_AUDIENCE
+            }
+        })
+
         const updated = await client.updateApp(token, currentObject.id, data)
         replaceApp(updated)
         setLoading(false)
@@ -83,14 +105,24 @@ export const AppsHome: React.FC = () => {
     }
 
     const handleRegenerate = async (id: string) => {
-        const token = await getAccessTokenSilently({ audience: process.env.REACT_APP_API_AUDIENCE })
+        const token = await getAccessTokenSilently({
+            authorizationParams: {
+                audience: process.env.REACT_APP_API_AUDIENCE
+            }
+        })
+
         const updated = await client.refreshApiKey(token, id)
         replaceApp(updated)
         Message.success("API key regenerated")
     }
 
     const handleDelete = async (id: string) => {
-        const token = await getAccessTokenSilently({ audience: process.env.REACT_APP_API_AUDIENCE })
+        const token = await getAccessTokenSilently({
+            authorizationParams: {
+                audience: process.env.REACT_APP_API_AUDIENCE
+            }
+        })
+
         await client.deleteApp(token, id)
         const newApps = apps.filter(app => app.id !== id)
         setApps(newApps)
